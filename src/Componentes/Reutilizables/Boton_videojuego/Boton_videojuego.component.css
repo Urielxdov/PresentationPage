@@ -1,0 +1,8 @@
+.boton_3d {
+    display: inline-block;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-weight: 700;
+}
