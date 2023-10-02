@@ -5,17 +5,12 @@ import './Boton_videojuego.component.css';
 
 
 
-function Boton_videojuego({ valorTexto, fondo }) {
+function Boton_videojuego({ valorTexto }) {
 
-
-    const EstiloBoton = {
-        backgroundColor: fondo,  // Mantenemos el color original como fondo
-    };
 
     return (
         <button
-            style={EstiloBoton}
-            className="boton_3d"
+            className="boton boton-verde"
         >
             {valorTexto}
         </button>

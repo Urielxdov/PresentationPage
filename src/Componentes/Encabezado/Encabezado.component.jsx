@@ -1,23 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { gsap } from "gsap";
 import './Encabezado.component.css';
 import Boton_videojuego from "../Reutilizables/Boton_videojuego/Boton_videojuego.component";
 
+const escribirTexto = (elemento, texto) => {
+  const intervalo = 100; // Intervalo entre cada letra en milisegundos
+  let contador = 0;
+
+  const interval = setInterval(() => {
+    elemento.innerText += texto[contador];
+    contador++;
+
+    if (contador === texto.length) {
+      clearInterval(interval);
+    }
+  }, intervalo);
+};
+
 function Encabezado() {
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
-  const [desktop, setDesktop] = useState(window.innerWidth >= 720);
+  const animacionLogo = useRef(null);
+  const animacionNavegacion = useRef(null);
+  let lineaTiempoEntrada = gsap.timeline();
+
+  const animarEntrada = () => {
+    lineaTiempoEntrada.from(animacionLogo.current, {
+      y: -50,
+      duration: 1
+    });
+
+    lineaTiempoEntrada.to(animacionLogo.current, {
+      y: 0,
+      duration: 2
+    });
+
+    // Animar escritura para cada elemento de navegación
+    const navegacionItems = animacionNavegacion.current.querySelectorAll('.navegacion-item');
+    navegacionItems.forEach((item, index) => {
+      gsap.from(item, {
+        opacity: 0,
+        y: 20,
+        duration: 1,
+        delay: index * 0.5,
+        onComplete: () => escribirTexto(item, item.innerText)
+      });
+    });
+  };
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-
-      setDesktop(window.innerWidth >= 720);
+      // Tu código para el manejo del tamaño de la ventana
     };
+
+    animarEntrada();
 
     window.addEventListener('resize', handleResize);
 
@@ -28,20 +62,16 @@ function Encabezado() {
 
   return (
     <header className="header">
-      <div className="header_logo">
+      <div className="header_logo" id="logo" ref={animacionLogo}>
         <h2>Uriel Galvan</h2>
       </div>
 
-      
-
-      <div className="header_navegacion">
+      <div className="header_navegacion" id="barra-navegacion" ref={animacionNavegacion}>
         <a href="#" className="navegacion-item"><span>01.</span> Sobre mi</a>
         <a href="#" className="navegacion-item"><span>02.</span> Proyectos</a>
         <a href="#" className="navegacion-item"><span>03.</span> Contacto</a>
-
         <Boton_videojuego
-          valorTexto={"Resumen"}
-          fondo={"#207B20"}
+          valorTexto={'Vamos a probar'}
         />
       </div>
     </header>
