@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import './Encabezado.component.css';
+
+
 import Boton_videojuego from "../Reutilizables/Boton_videojuego/Boton_videojuego.component";
 
 
@@ -20,10 +22,9 @@ function Encabezado() {
   }
 
   const animarNavegacion = () => {
-    let lineaTiempo = gsap.timeline();
     const navegacionElementos = animacionNavegacion.current.querySelectorAll('.navegacion-item');
-    navegacionElementos.forEach((item, index) => {
-      lineaTiempo.to(item, {
+    navegacionElementos.forEach(item => {
+      lineaTiempoEntrada.to(item, {
         opacity : 1,
         top : 0,
         duration : 0.5
@@ -62,7 +63,9 @@ function Encabezado() {
           valorTexto={'Vamos a probar'}
         />
       </div>
+
     </header>
+
   );
 }
 
