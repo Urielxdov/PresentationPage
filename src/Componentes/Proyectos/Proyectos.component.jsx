@@ -7,22 +7,24 @@ function Proyectos() {
 
     return (
         <section className="proyectos_tabla">
-            <section className="contenedor_grid">
-                <div className="tabla_encabezado">
-                    <p className="tabla_encabezado-item">Tecnologias</p>
-                    {tecnologias.map((tecnologia, index) => (
-                        <p key={'Tecnologia' + index} className="tabla_encabezado-item">{tecnologia}</p>
-                    ))}
-                </div>
+            <div className="tabla-barra"></div>
+            <div className="tabla_encabezado">
+                <p className="tabla_encabezado-item">Tecnologias</p>
+                {tecnologias.map((tecnologia, index) => (
+                    <p key={'Tecnologia' + index} className="tabla_encabezado-item">{tecnologia}</p>
+                ))}
+            </div>
 
-                <div className="tabla_proyectos">
-                    {proyectos.map((proyecto, index) => (
-                        <p key={'Proyecto' + index} className="tabla_proyectos-item">{proyecto}</p>
-                    ))}
-                </div>
+            <div className="tabla_proyectos">
+                {proyectos.map((proyecto, index) => (
+                    <p key={'Proyecto' + index} className="tabla_proyectos-item">{proyecto}</p>
+                ))}
+            </div>
 
-                <div className="tabla_proyectos-visualizacion"></div>
-            </section>
+            <div className="tabla_proyectos-visualizacion">
+
+                <p>ewufbghioerbghfiokwerbghfñoiaeruf</p>
+            </div>
         </section>
     );
 }
