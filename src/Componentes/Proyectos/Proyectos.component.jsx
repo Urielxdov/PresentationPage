@@ -9,53 +9,70 @@ function Proyectos() {
   const tecnologias = ["Angular", "React", "Java", "Python"];
   const proyectos = ["Prueba 1", "Prueba 2", "Prueba 3"];
 
+  let lineaTiempo = gsap.timeline();
+
   const enfocarTecnologia = (idTecnologia) => {
     const mapa = obtenerMapa();
-
-
+    let nodoObjetivo;
+    let animacionesTerminadas = 0;
 
     tecnologias.forEach((tecnologia, index) => {
-      const lineaTiempo = gsap.timeline();
       const nodo = mapa.get("Tecnologia" + index);
-      if (nodo) {
-        if ("Tecnologia" + index === idTecnologia) {
-          lineaTiempo.to(nodo, {
-            position : "relative",
-            // fontSize : 30,
-            maxWidth : "20%",
-            flexGrow : 0,
-            top: 0,
-            left: 0,
-            duration : 1
-          });
-        } else {
-          lineaTiempo.from(nodo, {
-            color : "#FFFFFF",
-            delay : 0
-          })
-          lineaTiempo.to(nodo, {
-            color: "transparent",
-            duration: 0.5,
-            ease: "power1.out",
-            delay: 0
-          });
-          setTimeout(()=> {
-            nodo.style.display = "none"
-          }, 2000)
-        }
+
+      if (idTecnologia === "Tecnologia" + index) {
+        nodoObjetivo = tecnologia;
       }
+
+      gsap.to(nodo, {
+        color: "transparent",
+        ease: "power1.out",
+        display: "none",
+        duration: 1,
+        delay: 0,
+        onComplete: () => {
+          animacionesTerminadas++;
+
+          // Verificar si todas las animaciones han terminado
+          if (animacionesTerminadas === tecnologias.length) {
+            animarBarra(nodoObjetivo);
+          }
+        },
+      });
     });
-    animarBarra();
   };
 
-  const animarBarra = ()=> {
+  const animarBarra = (nodo) => {
     const propiedadesBarra = barraEncabezado.current;
-    
-    gsap.to(propiedadesBarra, {
-      y : 20,
-      duration : 1
-    })
-  }
+    const botonTecnologias = obtenerMapa().get("Tecnologia");
+
+    lineaTiempo.to(botonTecnologias, {
+      opacity: 0,
+      duration: 0.3,
+      ease: "power1.out", // Easing para salida suave
+      onComplete: () => {
+        botonTecnologias.innerText = nodo;
+
+        lineaTiempo.to(propiedadesBarra, {
+          width : "70%",
+          x : "30%",
+          duration : 1
+        })
+
+        lineaTiempo.to(botonTecnologias, {
+          opacity: 1,
+          duration: 0.3,
+          fontSize : 15,
+          ease: "power1.in", // Easing para entrada suave
+        });
+
+        lineaTiempo.to(propiedadesBarra, {
+          y: 20,
+          duration: 0.5,
+          ease: "power1.inOut", // Easing para entrada y salida suave
+        });
+      },
+    });
+  };
 
   const obtenerMapa = () => {
     if (!seleccionLenguaje.current) {
@@ -74,7 +91,12 @@ function Proyectos() {
     <section className="proyectos_tabla">
       <div className="tabla-barra" ref={barraEncabezado}></div>
       <div className="tabla_encabezado" id="header_proyectos">
-        <button className="tabla_encabezado-item" ref={ nodo => obtenerMapa().set("Tecnologia", nodo)}>Tecnologias</button>
+        <button
+          className="tabla_encabezado-item"
+          ref={(nodo) => obtenerMapa().set("Tecnologia", nodo)}
+        >
+          Tecnologias
+        </button>
         {tecnologias.map((tecnologia, index) => (
           <button
             onClick={() => enfocarTecnologia("Tecnologia" + index)}

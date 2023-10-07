@@ -17,7 +17,7 @@
 
 .tabla_encabezado-item {
     position: relative;
-    width: 100%;
+    width: 20%;
     background-color: #0d1729;
     color: #FFFFFF;
     border: none;
@@ -68,6 +68,7 @@
 
 .tabla-barra {
     position: absolute;
+    top: -2px;
     border: 1px solid #8DAC8D;
     width: 100%;
     z-index: 10;
