@@ -53,25 +53,75 @@ function Proyectos() {
         botonTecnologias.innerText = nodo;
 
         lineaTiempo.to(propiedadesBarra, {
-          width : "70%",
-          x : "30%",
-          duration : 1
-        })
+          width: "70%",
+          x: "30%",
+          duration: 1,
+        });
 
         lineaTiempo.to(botonTecnologias, {
           opacity: 1,
           duration: 0.3,
-          fontSize : 15,
           ease: "power1.in", // Easing para entrada suave
         });
 
         lineaTiempo.to(propiedadesBarra, {
-          y: 20,
+          y: 18,
           duration: 0.5,
           ease: "power1.inOut", // Easing para entrada y salida suave
         });
       },
     });
+  };
+
+  const desenfocarTecnologia = () => {
+    let lineaTiempo = gsap.timeline();
+    const propiedadesBarra = barraEncabezado.current;
+
+    const botonTecnologias = obtenerMapa().get("Tecnologia");
+
+    const mapa = obtenerMapa();
+
+    lineaTiempo.to(botonTecnologias, {
+      opacity: 0,
+      duration: 0.3,
+      ease: "power1.out", // Easing para salida suave
+      onComplete: () => {
+        botonTecnologias.innerText = "Tecnologias";
+
+        lineaTiempo.to(propiedadesBarra, {
+          y: 0,
+          duration: 1,
+          ease: "power1.inOut",
+        });
+
+        lineaTiempo.to(botonTecnologias, {
+          opacity: 1,
+          duration: 0.3,
+          ease: "power1.in", // Easing para entrada suave
+        });
+
+        lineaTiempo.to(propiedadesBarra, {
+          width: "100%",
+          x: 0,
+          duration: 0.5,
+        });
+
+        tecnologias.forEach((tecnologia, index) => {
+          const nodo = mapa.get("Tecnologia" + index);
+    
+    
+          gsap.to(nodo, {
+            color: "#FFFFFF",
+            ease: "power1.out",
+            display: "block",
+            duration: 0.5,
+            delay : 1.5
+          });
+        });
+      },
+    });
+
+    
   };
 
   const obtenerMapa = () => {
@@ -93,6 +143,7 @@ function Proyectos() {
       <div className="tabla_encabezado" id="header_proyectos">
         <button
           className="tabla_encabezado-item"
+          onClick={desenfocarTecnologia}
           ref={(nodo) => obtenerMapa().set("Tecnologia", nodo)}
         >
           Tecnologias
