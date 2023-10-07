@@ -1,7 +1,6 @@
 .proyectos_tabla {
     position: relative;
     display: flex;
-    padding: 1%;
     width: 60%;
     height: 50vh;
     margin: 0 auto;
@@ -11,22 +10,28 @@
 
 
 .tabla_encabezado {
+    position: relative;
     flex-basis: 100%;
     display: flex;
-    justify-content: space-around;
 }
 
 .tabla_encabezado-item {
+    position: relative;
     width: 100%;
-    padding: 1% 0;
-    text-align: center;
+    background-color: #0d1729;
+    color: #FFFFFF;
+    border: none;
+    padding: 1%;
+    z-index: 50;
 }
 
 .tabla_encabezado-item:hover {
     cursor: pointer;
+    color: #346e34;
 }
 
 .tabla_proyectos {
+    position: relative;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -65,4 +70,5 @@
     position: absolute;
     border: 1px solid #8DAC8D;
     width: 100%;
+    z-index: 10;
 }
